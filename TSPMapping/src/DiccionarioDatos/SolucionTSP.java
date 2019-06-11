@@ -1,12 +1,11 @@
-
 package DiccionarioDatos;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 @XmlRootElement
-public class SolucionTSP {
-    
+public class SolucionTSP 
+{    
     ArrayList<Coordenada> listaOriginal = new ArrayList<Coordenada>();
     ArrayList<Coordenada> mejorEspecie = new ArrayList<Coordenada>();
     ArrayList<Especie> especiesElegidas = new ArrayList<Especie>();
@@ -36,28 +35,33 @@ public class SolucionTSP {
     public void setDescripcion(String Descripcion){this.Descripcion=Descripcion;}
     @XmlElement(name="Descripcion") public String getDescripcion(){return Descripcion;}   
     
-    public ArrayList<Coordenada> reOrdenamientoEspecie(int l){
+    public ArrayList<Coordenada> reOrdenamientoEspecie(int l)
+    {
         return especiesElegidas.get(l).reOrdenamiento(Coordenada.clonar(listaOriginal));
     }
 
-    public ArrayList<Coordenada> reOrdenamientoGen(int l){
-      ArrayList<Coordenada> mejor = new ArrayList<Coordenada>();
-      for(int c=0; c<genesElegidos.get(l).length;c++){
+    public ArrayList<Coordenada> reOrdenamientoGen(int l)
+    {
+        ArrayList<Coordenada> mejor = new ArrayList<Coordenada>();
+        for(int c = 0; c < genesElegidos.get(l).length; c++)
+        {
             mejor.add(listaOriginal.get(genesElegidos.get(l)[c]));
-      }    
-      return mejor;
+        }    
+        return mejor;
     }
 
-    public ArrayList<Coordenada> mejorSolucionEspecie(){
+    public ArrayList<Coordenada> mejorSolucionEspecie()
+    {
         return mejorEspecie;
     }
     
-    public ArrayList<Coordenada> mejorSolucionGen(){
-      ArrayList<Coordenada> mejor = new ArrayList<Coordenada>();
-      for(int c=0; c<mejorGen.length;c++){
+    public ArrayList<Coordenada> mejorSolucionGen()
+    {
+        ArrayList<Coordenada> mejor = new ArrayList<Coordenada>();
+        for(int c = 0; c < mejorGen.length; c++)
+        {
             mejor.add(listaOriginal.get(mejorGen[c]));
-      }    
-      return mejor;
-    }   
-       
+        }    
+        return mejor;
+    }
 }

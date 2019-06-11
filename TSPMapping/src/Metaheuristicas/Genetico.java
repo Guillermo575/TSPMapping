@@ -2,42 +2,44 @@ package Metaheuristicas;
 import DiccionarioDatos.*;
 import java.util.ArrayList;
 
-
-public class Genetico {
+public class Genetico 
+{
     ArrayList<Coordenada> problema;
     BruteForce br=new BruteForce();
-    int totalaleatorio=50;
-    int maximo=5;
-    int minimo=2;
+    int totalaleatorio = 50;
+    int maximo = 5;
+    int minimo = 2;
     double MutacionMinimo = .10;
     double MutacionMaximo = .40;
     int RangoElitismo = 1;
    
     public int getMinimo(){return minimo;}
-    public int getMaximo(){return maximo;} 
+    public void setMinimo(int minimo){this.minimo=minimo;}    
+    public int getMaximo(){return maximo;}
+    public void setMaximo(int maximo){this.maximo=maximo;}    
     public double getMutacionMinimo() {return MutacionMinimo;}
+    public void setMutacionMinimo(double MutacionMinimo) {this.MutacionMinimo = MutacionMinimo;}     
     public double getMutacionMaximo() {return MutacionMaximo;}
+    public void setMutacionMaximo(double MutacionMaximo) {this.MutacionMaximo = MutacionMaximo;}    
     public int getTotalAleatorio(){return totalaleatorio;}
+    public void setTotalAleatorio(int totalaleatorio){this.totalaleatorio=totalaleatorio;}    
     public int getRangoElitismo(){return RangoElitismo;}
-        
-    public void setMinimo(int minimo){this.minimo=minimo;}
-    public void setMaximo(int maximo){this.maximo=maximo;}
-    public void setMutacionMinimo(double MutacionMinimo) {this.MutacionMinimo = MutacionMinimo;}
-    public void setMutacionMaximo(double MutacionMaximo) {this.MutacionMaximo = MutacionMaximo;}
-    public void setTotalAleatorio(int totalaleatorio){this.totalaleatorio=totalaleatorio;}
     public void setRangoElitismo(int RangoElitismo){this.RangoElitismo=RangoElitismo;}
     
-    public Genetico(ArrayList<Coordenada> problema,BruteForce br){
-        this.problema=problema;
-        this.br=br;
+    public Genetico(ArrayList<Coordenada> problema, BruteForce br)
+    {
+        this.problema = problema;
+        this.br = br;
     }
      
-    public ArrayList <Especie> iniciarPoblacion(int poblacion){
+    public ArrayList <Especie> iniciarPoblacion(int poblacion)
+    {
         ArrayList <Especie> nuevaespecie = new ArrayList <Especie>();
         RangoElitismo = (RangoElitismo>poblacion) ? poblacion : RangoElitismo;
         RangoElitismo = (int)(RangoElitismo*0.01);
-        for(int l=0;l<poblacion;l++){
-            Especie semilla= new Especie(br,totalaleatorio,problema.size(),maximo,minimo);
+        for(int l = 0; l < poblacion; l++)
+        {
+            Especie semilla= new Especie(br, totalaleatorio, problema.size(), maximo, minimo);
             semilla.setRemoveUnable(false);
             semilla.reOrdenamiento(Coordenada.clonar(problema));
             nuevaespecie.add(semilla);
@@ -45,7 +47,8 @@ public class Genetico {
         return nuevaespecie;
     }
     
-    public SolucionTSP start(int poblacion,int generaciones){
+    public SolucionTSP start(int poblacion,int generaciones)
+    {
         SolucionTSP solucion = new SolucionTSP();
         solucion.setListaOriginal(Coordenada.clonar(problema));
         solucion.setMejorEspecie(Coordenada.clonar(problema));

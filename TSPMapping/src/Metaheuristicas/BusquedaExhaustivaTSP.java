@@ -2,17 +2,19 @@ package Metaheuristicas;
 import DiccionarioDatos.*;
 import java.util.ArrayList;
 
-public class BusquedaExhaustivaTSP {
-
+public class BusquedaExhaustivaTSP 
+{
     ArrayList<Coordenada> problema;
     BruteForce br=new BruteForce();
     
-    public BusquedaExhaustivaTSP(ArrayList<Coordenada> problema,BruteForce br) {
+    public BusquedaExhaustivaTSP(ArrayList<Coordenada> problema, BruteForce br) 
+    {
         this.problema = problema;
         this.br = br;
     }
 
-    public SolucionTSP start() {
+    public SolucionTSP start()
+    {
         //RUTA INICIAL DEL ALGORITMO
         SolucionTSP solucion = new SolucionTSP();
         solucion.setListaOriginal(problema);
@@ -25,14 +27,17 @@ public class BusquedaExhaustivaTSP {
         Especie nuevaespecie = new Especie();
         nuevaespecie.setBR(br);
         nuevaespecie.setResultado(costoActual);
-        for (int i = 1; i <= iteraciones; i++) {
-            for (int j = i; j <= iteraciones; j++) {
+        for (int i = 1; i <= iteraciones; i++) 
+        {
+            for (int j = i; j <= iteraciones; j++) 
+            {
                 ArrayList<Coordenada> rutaTemp = Coordenada.clonar(rutaActual);
                 Coordenada cambio = rutaTemp.get(i);
                 rutaTemp.set(i, rutaTemp.get(j));
                 rutaTemp.set(j, cambio);
                 double costoruta = br.distanciaTotal(rutaTemp);
-                if (costoruta < costoActual) {
+                if (costoruta < costoActual) 
+                {
                     costoActual = costoruta;
                     rutaActual = Coordenada.clonar(rutaTemp);
                     nuevaespecie.addGen(i, j-i);
