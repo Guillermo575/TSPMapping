@@ -1,0 +1,59 @@
+\begin{lstlisting}[language=JAVA, caption=Algoritmo Base del Método de Cuadrantes, label=lst:codigo11,escapechar=|]
+funcion Inicio()
+ {
+	RutaSolucion{Puntos[n]}
+	ArregloCuadrantes{Cuadrantes[Puntos[n]]}
+	Limite = n
+	Direccion = derecha
+	SubcuadranteOrigen = -1
+	CuadranteOrigen = -1
+	CuadranteDestino = -1
+	Comprobar()
+}
+funcion Comprobar()
+{
+	 While (ArregloCuadrantes.length > 0)
+	 {
+		CuadrantesActual = ArregloCuadrantes[0]
+		l = 0
+		While CuadrantesActual.length < l {
+			PuntosActual = CuadrantesActual[l]
+			If(PuntosActual.length < Limite)
+			{
+				Resolver()
+			} 
+			else 
+			{
+				Dividir()  
+			}
+			l++
+		} 
+		ArregloCuadrantes.remover[0]
+	}
+	Terminar()
+}	
+funcion Dividir()
+{
+	NuevosCuadrantes{Cuadrantes[Puntos[n]],Cuadrantes[Puntos[n]],Cuadrantes[Puntos[n]],Cuadrantes[Puntos[n]]} = Dividir PuntosActual en 4
+	Se reordena el orden de los elementos de NuevosCuadrantes de acuerdo al automata de cuadrantes de la figura \ref {fig:automata.png}
+		  -Para ello se calculan 2 ejes (X y Y) a partir de los valores que forman los puntos de ese cuadrante, de ahi se establece el centro que es igual a los valores divididos en 2
+		  - A partir de ahi se establece el orden de cuadrantes que va a recorrer para completar la ruta basandose en
+				-SubcuadranteOrigen: El cuadrante donde se encuentra
+				-En caso de que el cuadrante pertenezca a uno mas grande, el cuadrante al que planea dirigirse el cuadrante padre
+					-En caso de no ser menor a 0 significa que planea regresar a si mismo, por tanto puede viajar a direccion, izquierda,derecha,arriba o abajo (por preferencia se eligio izquierda), en el automata de la figura |\ref {fig:automata.png}| se interpretara como estado |$\lambda$|                    
+				-En caso de que el cuadrante pertenezca a uno mas grande, el numero de cuadrante padre al que pertenece
+					-En caso de no ser menor a 0 significa que planea regresar a si mismo, por tanto puede viajar a dirección, izquierda,derecha,arriba o abajo (por preferencia se eligio izquierda), en el automata de la figura |\ref {fig:automata.png}| se interpretara como estado |$\lambda$|       
+	Agregar NuevosCuadrantes a ArregloCuadrantes reemplazando PuntosActual en el mismo lugar donde estaban
+	Comprobar()	
+}
+funcion Resolver()
+{
+	PuntosActual = Reordenar orden de los elementos de PuntosActual usando metodo de Fuerza Bruta probando todas las combinaciones posibles y obtener el mejor resultado
+	agregar PuntosActual a RutaSolucion
+	Comprobar()
+}
+function Terminar()
+{
+	Mostrar resultados de RutaSolucion
+}	
+\end{lstlisting}  

@@ -1,0 +1,48 @@
+\subsubsection{La técnica de Ramificación y Poda (Branch and 
+Bound)}
+Es una técnica de diseño algorítmica cuyo nombre en español proviene de Branch and 
+Bound en el idioma Ingles y se aplica normalmente en la solución de problemas de 
+optimización donde la complejidad computacional es grande. Ramificación y Poda es 
+una variante de la técnica de Vuelta Atrás, siendo similar a ésta última en que se realiza 
+una enumeración parcial del espacio de soluciones del problema basándose en la 
+generación de un árbol de expansión. Sin embargo la diferencia radica en que en 
+Ramificación y Poda existe la posibilidad de generar nodos siguiendo distintas 
+estrategias y en Vuelta Atrás no \cite{[GUE99]}. 
+ 
+\hspace*{1cm}El diseño de Ramificación y Poda puede seguir un recorrido de su árbol de expansión en anchura (estrategia LIFO), en profundidad (estrategia FIFO), o utilizando el cálculo de funciones de costos para seleccionar el nodo que en principio parezca más prometedor a analizar (estrategia del mínimo costo o LC).\\
+
+\hspace*{1cm}Además de estas estrategias Ramificación y Poda utiliza cotas para hacer el podado de las ramas del árbol de expansión que conduzcan a la solución óptima. Para ello se calcula en cada nodo una cota del posible valor de aquellas soluciones alcanzables desde ése nodo. Si la cota muestra que cualquiera de estas soluciones tiene que ser necesariamente peor que la mejor solución hallada hasta ese momento, no se necesita seguir explorando por esa rama del árbol, lo que permite llevar a cabo el proceso de poda.\\ 
+ 
+\hspace*{1cm}Dentro de esta técnica, para determinar en cada momento que nodo será ramificado y 
+dependiendo de la estrategia de búsqueda utilizada, se requerirá almacenar todos los 
+nodos que no hayan sido podados, es decir, aquellos con posibilidad de ser ramificados (nodos vivos), en alguna estructura de datos que podamos recorrer.\\ 
+ 
+\hspace*{1cm}Se utilizará una PILA de nodos generados que todavía no han sido examinados si la 
+estrategia de búsqueda seleccionada es la de búsqueda en profundidad (LIFO). Pero si 
+la estrategia seleccionada ha sido la de búsqueda en amplitud (FIFO), entonces la 
+estructura de datos a utilizar será una COLA. Por el contrario, si la estrategia elegida es la del mínimo costo (LC), la estructura necesaria de uso será un Montículo(HEAP) para poder almacenar los nodos ordenados por su costo. La estrategia del mínimo costo utiliza una función de costos que decide en cada momento qué nodo debe explorarse, con la esperanza de alcanzar lo más rápidamente posible una solución más económica que la mejor encontrada hasta ese momento. \\
+
+En un algoritmo de ramificación y poda se llevan a cabo básicamente tres etapas: 
+ 
+\begin{enumerate}
+    \item \textbf{ La etapa de Selección:} Se encarga de extraer un nodo de entre el conjunto de los nodos que no han sido podados y que tienen la posibilidad de ser ramificados. La forma de elección depende directamente de la estrategia de búsqueda que se decida utilizar en el algoritmo.
+    \item  \textbf{La etapa de Ramificación:} Se construyen los posibles nodos hijos del nodo seleccionado en el paso anterior, formando el árbol de expansión. 
+    \item  \textbf{La etapa de Poda:} Se eliminan algunos de los nodos creados en la etapa anterior, 
+aquellos cuyo costo parcial sea mayor que la mejor cota mínima calculada en ese 
+momento.
+\end{enumerate}
+ 
+
+\hspace*{1cm}La contribución de éste algoritmo es la disminución en lo posible del espacio de búsqueda y por tanto la atenuación de la complejidad en la exploración del árbol de posibilidades de la solución óptima. \\
+\hspace*{1cm}Aquellos nodos no podados pasan a formar parte del conjunto de nodos con posibilidad de ser ramificados, y se comienza de nuevo el proceso de selección. El algoritmo finaliza una vez encontrada la solución del problema o bien cuando se agota el conjunto de nodos con posibilidad de ser ramificados.\\
+\hspace*{1cm}Existen varios esquemas para la paralelización de los algoritmos de Ramificación y Poda dependiendo de las características de las diferentes arquitecturas paralelas que se tengan \cite{[CAP]}. Pero en resumen los esquemas se clasifican en dos grandes grupos:
+
+\begin{itemize}
+    \item  Esquemas Basados en Memoria Compartida 
+    \item  Esquemas Basados en Sistemas Distribuidos
+\end{itemize}
+
+\hspace*{1cm}La implementación paralela que aquí se muestra se basa en el primer tipo de esquemas, suponiendo una lista de nodos activos donde la comunicación entre ellos se hace a través de variables que utilizan una memoria común.\\
+ 
+\hspace*{1cm}Uno de los mayores problemas de la técnica de Ramificación y Poda es la 
+implementación de los algoritmos que la diseñan. Sin embargo, el uso del paradigma de la orientación a objetos hace menos difícil esta tarea gracias al uso de sus propiedades como son la herencia y la modularidad.\\

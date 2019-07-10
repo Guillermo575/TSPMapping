@@ -1,0 +1,15 @@
+\subsubsection {Mixturas finitas}
+ \hspace*{1cm} sea $Y=[Y_{1},Y_{2},... ,Y_{n}]$ una variable aleatoria d-dimensional con $y=[y_{1},y_{2},... ,y_{d}]^t$ representando un resultado particular de Y. se dice que Y sigue una distribución de mixtura finita con k componentes si su función de densidad de probabilidad se puede escribir por: \\
+$p(y/\theta) =  \sum\limits_{m=1}^k \alpha_{m} p(y/\theta_{m}) $\\
+
+Donde $\alpha_{1},\alpha_{2},...,\alpha_{k}}$ son probabilidades mezclantes (probabilidades a priori ) que nos indican el grado de importancia de cada uno de los k modos, cada $\theta_{m}$ es el vector de parámetros que define la m-ésima componente, 
+$\theta = { \theta_{1},...,\theta_{k},\alpha_{1},...,\alpha_{k} }$
+es el conjunto completo de parámetros necesarios para especificar la mixtura, por supuesto las $\alpha_{m}$ deben satisfacer:\\
+$\alpha_{m}\geq$ para todo $m = 1,...,k $ y $\sum\limits_{m=1}^k \alpha_{m} =1 $\\
+
+La opción usual para obtener los estimados de los parámetros es el algoritmo Expectation-Maximization (EM) \cite{[FIGJA]} que produce una secuencia de estimados de $\theta$ aplicando alternativamente dos pasos (E-paso y M-paso) hasta obtener un máximo local de: $\log p(Y / \theta)$, siendo Y un conjunto de n muestras independientes e idénticamente distribuidas.\\
+\hspace*{1cm}Este algoritmo tiene varias limitaciones: es un método local, por tanto es sensible a la inicialización; puede converger a la frontera del espacio de parámetros donde la verosimilitud es no acotada llevando a estimados sin sentido; si el número de componentes es muy grande puede sobre-entrenar los datos pues estos son incompletos y por tanto se puede obtener una forma más irregular de lo que verdaderamente es, mientras que una mixtura con pocas componentes no es lo suficientemente flexible para aproximar al verdadero modelo; la finalización también es una limitación, pues llega un momento donde el proceso deja de evolucionar por lo que se supone que alcanza la localización óptima pero esto no nos asegura la verdadera distribución.\\
+\hspace*{1cm}En el algoritmo que se describe en [10] se implementa el criterio de Mínima longitud de un Mensaje usando una variante del EM, así reduce las limitaciones del mismo, es robusto con respecto a la inicialización, elimina el problema de la convergencia a la frontera del espacio de parámetros, comienza por un valor de k grande kmax hasta otro menor kmin y obtiene buenos resultados debido a que emplean la variante de considerar solamente las componentes de probabilidad no cero para obtener los estimados de los parámetros. Se puede usar para cualquier tipo de modelo de mixtura, en sus experimentos lo emplearon para mixturas de gaussianas y a diferencia del EM este algoritmo lo que hace es minimizar la función objetivo:\\
+$L(y/\theta) = \frac{N}{2} \sum\limits_{m: \alpha_{m}>0} \log(\frac{n\alpha_{m}}{12}) + \frac{k_{nz}}{2} \log(\frac{n}{12})+ \frac{k_{nz}(N+1)}{2} -\log(p(Y / \theta)) $\\
+
+Donde N es la dimensión del parámetro $\theta m$ y $k_{nz}$.

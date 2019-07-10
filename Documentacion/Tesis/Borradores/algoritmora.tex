@@ -1,0 +1,83 @@
+    \begin{lstlisting}[language=JAVA, caption=Pseudocodigo del Rectangulo aureo, label=lst:codigo10]
+
+limite=5;     
+clase punto{float x,y;} 
+
+public Lista<punto> resolverProblema(Lista<punto> lstpuntos){
+//El metodo principal, recibe una lista de puntos y el establece el origen y la prioridad
+	Lista<punto> listanueva = resolverruta(lstpuntos,lstpuntos[0];new int[]{0,1,3,2});
+	regresa listanueva;
+}
+
+public Lista<punto> resolverRuta(Lista<punto> lstpuntos,punto origen;int[] prioridad)){
+	Lista<punto> listanueva;
+/* En este metodo checa si el numero de puntos que recibe es menor del limite para resolverse, 
+   de lo contrario se llama a otro metodo cuya funcion es fragmentar la lista */
+	Si(lstpuntos.length<=limite){
+		listanueva= fuerzaBruta(Lista<punto>);
+	}else
+		listanueva= resolverCuadrantes(lstpuntos,origen;prioridad);
+	return listanueva;
+}
+
+public Lista<punto> resolverCuadrantes(Lista<punto> lstpuntos,punto origen;int[] prioridad)){
+/* En este metodo se encargara de dividir la lista en 4 grupos de acuerdo a la relación con los ejes X,Y del punto origen, 
+   una ves agrupados se llamara de nuevo al metodo de resolverRuta y a su ves llamara de nuevo este método en caso de necesitar 
+   otra fragmentación una vez terminado se agruparan los 4 cuadrantes en uno solo y se iran integrando*/
+	Lista<punto>[] cuadrantes= new Lista<punto>[4];
+	Lista<punto> listanueva;
+	/* Este ciclo se encarga de signar a que cuadrante pertenecera*/
+	Ciclo(int l=0;l<lstpuntos.length;l++){
+		Si(lstpuntos[l].x<=origen.x && lstpuntos[l].y<=origen.y)cuadrantes[0].agregar(lstpuntos[l]);
+		Si(lstpuntos[l].x>origen.x && lstpuntos[l].y<=origen.y)cuadrantes[1].agregar(lstpuntos[l]);
+		Si(lstpuntos[l].x<=origen.x && lstpuntos[l].y>origen.y)cuadrantes[2].agregar(lstpuntos[l]);;
+		Si(lstpuntos[l].x>origen.x && lstpuntos[l].y>origen.y)cuadrantes[3].agregar(lstpuntos[l]);;
+	}
+	/*En este ciclo se llama de nuevo al metodo de resolverRuta para cada uno de los 4 grupos, dentro de ahi se creara un punto medio para el origen de 
+	  cada cuadrante*/
+	Ciclo(int l=0;l<prioridad.length;l++){
+		if(cuadrantes[prioridad[l]].length>0){
+			punto origencuadrante; //es el hipotetico punto por el cual van a partir los demas cuadrantes en caso de que necesite refragmentarse otra ves
+			punto masX,menosX,masY,menosY;// para poder obtener dicho punto se buscara que numeros estan mas y menos cerca de los ejes X y Y y asi calcular las coordenadas
+			Ciclo(int m=0;m<cuadrantes[prioridad[l]].length;m++){
+			   //aqui se verifica si un punto un punto esta mas cerca o lejos del eje X o Y que el anterior, si el ciclo esta empezando se pondran por default
+			   Si(cuadrantes[prioridad[l]][m].X <= menosX.X || m==0)menosX=cuadrantes[prioridad[l]][m];
+			   Si(cuadrantes[prioridad[l]][m].X >= masX.X || m==0)masX=cuadrantes[prioridad[l]][m];
+			   Si(cuadrantes[prioridad[l]][m].Y <= menosY.Y || m==0)menosY=cuadrantes[prioridad[l]][m];
+			   Si(cuadrantes[prioridad[l]][m].Y >= masY.Y || m==0)masY=cuadrantes[prioridad[l]][m];
+			   //aqui verifica si el punto principal del cuadrante esta mas cerca del origen, en caso que haya otro mas cerca se cambiaran de lugares
+			   Si(formulaDistancia(origen,cuadrantes[prioridad[l]][m])<formulaDistancia(origen,cuadrantes[prioridad[l]][0])){
+				punto temporal=cuadrantes[prioridad[l]][0];
+				cuadrantes[prioridad[l]][0]=cuadrantes[prioridad[l]][m];
+				cuadrantes[prioridad[l]][m]= temporal;
+			   }
+			}
+			// ya obtenidos las variables masX,menosX,masY,menosY se establece las coordenadas del origen
+			origencuadrante.x=(masX.x+menosX.x)/2;
+			origencuadrante.y=(masY.y+menosY.y)/2;
+			
+			//ahora ya se llamara a la clase resolverRuta para obtener una lista
+			Lista<punto> sumacuadrante =resolverRuta(cuadrantes[prioridad[l]],origencuadrante;prioridad));
+			for(int n=0;n<sumacuadrante.length;n++){
+				listanueva.agregar(sumacuadrante[0]);
+			}
+		}
+	}
+	retorno listanueva;
+}
+
+public Lista<punto> fuerzaBruta(Lista<punto> lstpuntos){
+  Lista<punto> lstnueva;
+  /*Aqui se crea combinaciones con todos los numeros sin repetir y usando todos con el fin de determinar en que orden es mas optimo, 
+  al final devuelve una lista con los puntos ya ordenados*/
+  retorna lstnueva;
+}
+
+public float formulaDistancia(punto inicio, punto fin){
+  //usando la formula $v ((?x2?^2-?x1?^2 )+(?y2?^2-?y1?^2))$  para hallar la distancia.
+}
+
+/*NOTA : Para evitar complicar por el momento el codigo solo se esta utilizando un arreglo de prioridad, se tiene contemplando 
+un metodo para averiguar que prioridad puede ser la mejor o bien, incluso usar un metodo de fuerza bruta solo que en ves de agrupar puntos serian listas*/ 
+
+    \end{lstlisting}

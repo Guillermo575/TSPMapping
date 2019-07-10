@@ -1,0 +1,115 @@
+\subsection{Antecedentes}
+\phantomsection
+El problema del agente viajero (TSP por sus siglas en inglés) fue formulado en 1930 y según la teoría de la complejidad es considerado como un problema NP-Completo que, en otras palabras, no puede ser resuelto por métodos convencionales. El TSP está aplicado principalmente para el trazo de rutas vehiculares óptimas, al buscar la distancia más corta de un punto a otro.\\
+\hspace*{1cm}Existen distintos enfoques y fuentes de información para el estudio y resolución del TSP. La fuente de información usada para este trabajo será la TSPLIB que es una agrupación de problemas de prueba para TSP para comparar el rendimiento de dichos enfoques. El conjunto de problemas que componen la TSPLIB fueron encontradas en la página de la Universidad de Heidelberg (\cite{[TSPLIB]}).\\
+\hspace*{1cm}Dentro de los enfoques conocidos se encuentra el uso de metaheurísticas, que han probado ser eficientes para resolver problemas computacionales complejos incluyendo el TSP.\\
+
+\subsection{Planteamiento del problema}
+El problema inicia bajo la siguiente premisa: “Un viajero quiere pasar por una cantidad específica de lugares recorriendo la menor distancia y en el menor tiempo y regresar al punto de origen pasando por cada ciudad una sola vez”.\\ 
+\hspace*{1cm}Este problema, aunque fácil de plantear es difícil resolver, ya que la cantidad de rutas posibles crecen de manera exponencial. En las tablas \ref {table:Cap1_1_1} y \ref {table:Cap1_1_2} se tiene un ejemplo de las combinaciones que se obtienen en función del número de ciudades pero partiendo del mismo punto de origen.
+    
+    \begin{table}[hbtp]
+        \centering
+        \caption{Rutas posibles con 2 lugares.}       
+        \begin{tabular}{| l | l |  }
+            \hline
+             \rowcolor[gray]{0.9} 1  &  2 \\ \hline
+             A  & B \\ \hline
+        \end{tabular}
+        \label{table:Cap1_1_1}
+    \end{table}
+
+\hspace*{1cm}En el ejemplo de la tabla \ref {table:Cap1_1_1} las combinaciones que se pueden realizar si el viaje fuera de 2 puntos sería solo 1; ahora realizando el mismo ejemplo pero calculando el número de rutas de 5 lugares se puede observar en la tabla \ref {table:Cap1_1_2} como el número de rutas aumenta.
+    
+    \begin{table}[hbtp]
+        \centering
+        \caption{Ejemplo con 5 lugares.}       
+        \begin{tabular}{ | l | l | l | l | 1 |  }
+            \hline
+            \rowcolor[gray]{0.9}
+            1 & 2 & 3 & 4 & 5 \\ \hline
+            A & B & C & D & E \\ \hline
+            A & B & C & E & D \\ \hline
+            A & B & D & C & E \\ \hline
+            A & B & D & E & C \\ \hline
+            A & B & E & B & C \\ \hline
+            A & B & E & C & B \\ \hline
+        \end{tabular}
+        \hspace*{0.1cm}
+        \begin{tabular}{ | l | l | l | l | 1 |  }
+            \hline
+            \rowcolor[gray]{0.9}
+            1 & 2 & 3 & 4 & 5 \\ \hline
+            A & C & B & D & E \\ \hline
+            A & C & B & E & D \\ \hline
+            A & C & D & B & E \\ \hline
+            A & C & D & E & B \\ \hline
+            A & C & E & B & D \\ \hline
+            A & C & E & D & B \\ \hline
+        \end{tabular}
+        \hspace*{0.1cm}
+        \begin{tabular}{ | l | l | l | l | 1 |  }
+            \hline
+            \rowcolor[gray]{0.9}
+            1 & 2 & 3 & 4 & 5 \\ \hline
+            A & C & B & D & E \\ \hline
+            A & C & B & E & D \\ \hline
+            A & C & D & B & E \\ \hline
+            A & C & D & E & B \\ \hline
+            A & C & E & B & D \\ \hline
+            A & C & E & D & B \\ \hline
+        \end{tabular}
+        \hspace*{0.1cm}
+        \begin{tabular}{ | l | l | l | l | 1 |  }
+            \hline
+            \rowcolor[gray]{0.9}
+            1 & 2 & 3 & 4 & 5 \\ \hline
+            A & E & B & C & D \\ \hline
+            A & E & B & D & C \\ \hline
+            A & E & C & B & D \\ \hline
+            A & E & C & D & B \\ \hline
+            A & E & D & B & C \\ \hline
+            A & E & D & C & B \\ \hline
+        \end{tabular}
+        \label{table:Cap1_1_2}
+    \end{table}
+    
+    
+\hspace*{1cm}Como se acaba de ver en la tabla \ref {table:Cap1_1_2} se pueden observar 24 combinaciones posibles a tomar; esta cantidad aumenta de manera exponencial de acuerdo al número de entradas (lugares) que recibe, lo que significa que entre más lugares tenga el problema más tiempo se ocupa para encontrar la ruta más corta.\\
+\hspace*{1cm}La resolución del TSP a llamado la atención de la comunidad científica desde su formulación inicial. De acuerdo a \cite{[REF2]} las aplicaciones del TSP van más allá del problema de planear una ruta ya que se utiliza en varias áreas de conocimiento que incluyen las matemáticas, las ciencias computacionales, la investigación de operaciones, la genética y otras disciplinas de la ingeniería.\\ 
+\hspace*{1cm}De acuerdo a lo anterior existen propuestas para su resolución que abarcan el uso de diversos algoritmos extraídos tanto de la teoría de grafos como de la inteligencia artificial. Estos algoritmos utilizan heurísticas tanto determinísticas según \cite{[REF4]} como aquellas basadas en la aleatoriedad según \cite{[REF5]}.\\
+\hspace*{1cm}TSP es considerado como un problema de optimización que busca dentro de un conjunto de soluciones candidatas (las posibles rutas de viaje) aquella que presente el mejor resultado (en caso del TSP costo menor) respecto a todas las demás. Existen propuestas que consisten en partir de una solución inicial aplicando reglas para mejorar dicha solución, ó aquellas que trabajan con un grupo se soluciones cuya información se vuelve a combinar para generar nuevas soluciones.\\
+\hspace*{1cm}Un aspecto importante en los algoritmos para resolver problemas de optimización es definir la solución inicial, generalmente se utiliza una solución inicial completamente aleatoria o una simple secuencia ordenada de ciudades según \cite{[REF3]}.\\
+\hspace*{1cm}Por lo anterior, es posible definir el siguiente planteamiento: ¿Es posible encontrar una solución inicial del problema del agente viajero utilizando una técnica de agrupamiento basada en cuadrantes que sea competitiva o esté cercana al óptimo?
+
+\subsection{Objetivos}
+El objetivo general es crear un algoritmo que servirá para obtener una solución inicial a instancias del TSP, que servirá como base para aplicar una serie de metaheurísticas que refinarán la solución con el fin de obtener soluciones cercanas al óptimo.\\
+\subsubsection{Objetivos específicos}
+  \begin{itemize} 
+    \item Desarrollar un algoritmo que permita obtener una solución cercana a la óptima.
+    \item Hacer uso de los resultados obtenidos por medio del algoritmo anterior aplicándolo con metaheurísticas.  
+    \item Crear un programa que sea capaz de realizar los procedimientos anteriores, también que lea y guarde archivos en “.TSPLIB”, este tipo de formato son los utilizados para resolver problemas de TSP.
+    \item Comparar lo que se obtuvo por medio del programa con su respectivo benchmark y anotar los resultados tanto el costo de cada problema como de la imagen de la ruta creada por medio del programa.
+  \end{itemize}
+  
+\subsection{Justificación}
+Aunque ya existen formas de resolver el problema del agente viajero, se aportará con una forma novedosa para encontrar una solución inicial al problema.\\
+\hspace*{1cm}También se demostrará que se pueden obtener rutas con resultados cercanos al óptimo usando un algoritmo de agrupamiento combinado con metaheurísticas.\\
+\hspace*{1cm}Por último el programa se creará con la finalidad para demostrar de manera gráfica el potencial de los procedimientos ejecutados y observar los cambios. No está de más mencionar que cualquier problema resuelto se puede guardar en un archivo para volverlos a cargar cuando se necesite.
+
+\subsection{Hipótesis}
+%Basado en los resultados obtenidos se comprobará que el uso del método de agrupación basado en cuadrantes sirve para obtener resultados cercanos a sus respectivos benchmarks en un corto lapso de tiempo. El uso de metaheurísticas servirá para mejorar el resultado obtenido.\\
+El uso del método de agrupación basado en cuadrantes con la ayuda de metaheurísticas, obtiene resultados cercanos a los reportados en la literatura en un lapso corto de tiempo, para  un conjunto de benchmarks seleccionados de la librería TSPLIB.\\
+
+\subsection {Alcances}   
+      \begin{itemize} 
+		  \item El uso del algoritmo basado en cuadrantes en conjunción con una serie de metaheurísticas proporcionará soluciones cercanas al óptimo para el TSP.
+		  \item El uso del programa, al poder leer archivos en formato .tsp permite que cualquier otro investigador del campo de TSP pueda utilizarlo para sus respectivas pruebas, un ejemplo están en los problemas encontrados en la página de la universidad de Waterloo según cite{[MONALISA]}, esto se describirá más a detalle en el tema \ref{subsection:ARTTSP}.
+      \end{itemize}
+        
+\subsection {Limitaciones}
+       \begin{itemize} 
+		  \item El algoritmo creado no supera a los mencionados benchmark.
+		  \item El uso del programa creado solo está limitado a problemas que se encuentren en archivos de la TSPLIB, además que solo resuelve problemas de tipo euclidiano en 2 dimensiones.
+      \end{itemize}
+      

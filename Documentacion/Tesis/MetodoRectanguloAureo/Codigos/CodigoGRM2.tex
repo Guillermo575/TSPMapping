@@ -1,0 +1,126 @@
+\begin{lstlisting}[language=C++, caption=Algoritmo Base del Método de Cuadrantes, label=lst:codigo11,escapechar=|]
+final int [][]izquierda = new int[][]{new int[]{0,1,2,3}, new int[]{1,2,3,0}, new int[]{2,1,0,3}, new int[]{3,2,1,0},}; 
+final int [][]derecha   = new int[][]{new int[]{0,3,2,1}, new int[]{1,0,3,2}, new int[]{2,3,0,1}, new int[]{3,0,1,2},}; 
+final int [][]arriba    = new int[][]{new int[]{0,3,2,1}, new int[]{1,2,3,0}, new int[]{2,3,0,1}, new int[]{3,2,1,0},};    
+final int [][]abajo     = new int[][]{new int[]{0,1,2,3}, new int[]{1,0,3,2}, new int[]{2,1,0,3}, new int[]{3,0,1,2},};
+public ArrayList<Coordenada> centros=new ArrayList<Coordenada>();
+public ArrayList<Coordenada> mins=new ArrayList<Coordenada>();     
+public ArrayList<Coordenada> maxs=new ArrayList<Coordenada>();
+public BruteForce br=new BruteForce();
+int limite=2; //Si cada ruta a resolver excede este limite, se fragmentara por cuadrantes 
+/*INICIO*/    
+      public ArrayList<Coordenada> start(MarkerDictionary md){    return resolverRuta(md.marcadores,md.marcadores.get(0),-1,-1);    }
+/*COMPROBACION*/ 
+      public ArrayList<Coordenada> resolverRuta(ArrayList<Coordenada> lstpuntos,Coordenada destino,int cuadranteorigen, int cuadrantedestino){
+               /*Se buscan los extremos de cada cuadrante para establecer un punto centro, esto es en caso de que se necesite volver a defragmentar de nuevo el cuadrante*/
+                      double MinX=0;double MaxX=0;double MinY=0;double MaxY=0;               
+                      for(int l=0;l<lstpuntos.size();l++){
+                             Coordenada punto=lstpuntos.get(l);
+                             if(punto.x<MinX || l==0)MinX=punto.x;
+                             if(punto.x>MaxX || l==0)MaxX=punto.x;
+                             if(punto.y<MinY || l==0)MinY=punto.y;
+                             if(punto.y>MaxY || l==0)MaxY=punto.y; 
+                      }
+                      centros.add(new Coordenada((MinX+MaxX)/2, (MinY+MaxY)/2));
+                      mins.add(new Coordenada(MinX, MinY));
+                      maxs.add(new Coordenada(MaxX, MaxY));      
+              /*Si se alcanza menos del limite se resuelve por el metodo de fuerza bruta, si no se fragmentara de manera infinita hasta satisfacer el limite*/
+                    if(lstpuntos.size()<=limite) return br.start(lstpuntos,destino);
+                    else return resolverCuadrante(lstpuntos,cuadranteorigen,cuadrantedestino);
+      }
+/*DIVISION*/     
+      public ArrayList<Coordenada> resolverCuadrante(ArrayList<Coordenada> lstpuntos,int cuadranteorigen, int cuadrantedestino){
+              Coordenada centro=centros.get(centros.size()-1);
+              Coordenada max=maxs.get(maxs.size()-1);
+              Coordenada min=mins.get(mins.size()-1);
+              ArrayList<Coordenada> total=new ArrayList<Coordenada>(); //Resultado final
+              ArrayList<ArrayList<Coordenada>> cuadrantes= new ArrayList<ArrayList<Coordenada>>();
+              ArrayList<Coordenada> destinos=new ArrayList<Coordenada>(4);
+              int[]priori=new int[0];
+              /*Se crea los nuevos 4 cuadrantes junto con puntos intermedios para conectar cuadrante-cuadrante*/
+                    for(int l=0;l<4;l++){
+                          cuadrantes.add(new ArrayList<Coordenada>());
+                          destinos.add(new Coordenada(0,0));
+                    }
+              /*DISTRIBUCION*//*Dependiendo de su posicion con respecto a los ejes del centro se iran a un determinado cuadrante*/
+                    for(int l=0;l<lstpuntos.size();l++){
+                          int nuevoCuadrante = 0;
+                          Coordenada punto=lstpuntos.get(l);
+                                if(punto.x<=centro.x && punto.y<=centro.y){nuevoCuadrante = 0;}
+                           else if(punto.x>centro.x && punto.y<=centro.y){nuevoCuadrante = 1;}
+                           else if(punto.x<=centro.x && punto.y>centro.y){nuevoCuadrante = 3;}
+                           else if(punto.x>centro.x && punto.y>centro.y){nuevoCuadrante = 2;} 
+                            cuadrantes.get(nuevoCuadrante).add(punto);
+                            if(cuadranteorigen==-1)cuadranteorigen=nuevoCuadrante;
+                            if(l==0)priori=getPriori(cuadranteorigen,nuevoCuadrante,cuadrantedestino);       
+                    }   
+               /*Debido a que se conectan al final los 4 cuadrantes sin relacionarse y el primer punto es el origen se crea unos puntos intermedios para verificar la cercania que hay en el eje X o Y dependiendo de la cuadrante*/           
+                    destinos.set(0,new Coordenada(centro.x,min.y));
+                    destinos.set(1,new Coordenada(max.x,centro.y));
+                    destinos.set(2,new Coordenada(centro.x,max.y));       
+                    destinos.set(3,new Coordenada(min.x,centro.y));   
+                /*Aqui se elige cual va a ser el primer punto del siguiente cuadrante calculando la cercania que tiene con un punto elegido, de no tener puntos en las secciones vecinas se va al siguiente punto*/
+                    for(int l=0;l<3;l++){
+                        ArrayList<Coordenada> puntos=cuadrantes.get(priori[l]);
+                          if(!puntos.isEmpty()){
+                                  int cuadrantesiguiente = priori[l+1];
+                                  Coordenada ultimo = puntos.get(puntos.size()-1);
+                                  for(int m = l;m<2;m++){
+                                        if(cuadrantes.get(cuadrantesiguiente).isEmpty() && l<2) {
+                                                ultimo = new Coordenada(centro.x,centro.y);
+                                                cuadrantesiguiente=priori[m+1]; 
+                                        }
+                                  }
+                                  if(!cuadrantes.get(cuadrantesiguiente).isEmpty()){
+                                          ArrayList<Coordenada> puntossiguientes=cuadrantes.get(cuadrantesiguiente); 
+                                          double distanciamenor=br.getDistance(ultimo,puntossiguientes.get(0));
+                                          Coordenada cambio= new Coordenada(puntossiguientes.get(0).x,puntossiguientes.get(0).y);  
+                                          Coordenada cambio2= new Coordenada(puntossiguientes.get(0).x, puntossiguientes.get(0).y);                      
+                                          for(int m=1;m<puntossiguientes.size();m++){
+                                                  double distancianueva=br.getDistance(ultimo,puntossiguientes.get(m));
+                                                  if(distancianueva<distanciamenor){                               
+                                                        distanciamenor=distancianueva;
+                                                        cambio=new Coordenada(puntossiguientes.get(0).x, puntossiguientes.get(0).y);
+                                                        cambio2=new Coordenada(puntossiguientes.get(m).x,puntossiguientes.get(m).y);   
+                                                        puntossiguientes.get(0).setCoords(cambio2.x, cambio2.y);
+                                                        puntossiguientes.get(m).setCoords(cambio.x, cambio.y);                  
+                                                  }
+                                          }                       
+                                  }
+                         }
+                    }
+                /*Despues de preparar dichos parametros se llama otra ves al metodo resolverruta en cada cuadrante, el resultado se añadira a la lista total, se pueden llegar a repetir estas llamadas hasta que satisfaga el limite*/
+                    for(int l=0;l<4;l++){
+                              ArrayList<Coordenada> puntos=cuadrantes.get(priori[l]);
+                              if(!puntos.isEmpty()){
+                                      int siguientedestino=(siguientedestino>3)? 0 : (l+1);
+                                      int origencuadrante=priori[l];
+                                      int siguiencuadrante=priori[siguientedestino];
+                                      if(l==3){
+                                                switch(priori[3]){
+                                                    case 0: destinos.set(0,new Coordenada(min.x,min.y));
+                                                    case 1: destinos.set(1,new Coordenada(max.x,min.y));
+                                                    case 2: destinos.set(2,new Coordenada(max.x,max.y));                               
+                                                    case 3: destinos.set(3,new Coordenada(min.x,max.y));
+                                                    default : destinos.set(3,new Coordenada(centro.x,centro.y)); 
+                                                }      
+                                                if(cuadrantedestino>=0) {
+                                                        origencuadrante = cuadranteorigen;
+                                                        siguiencuadrante = cuadrantedestino;
+                                                }                                                    
+                                      }    
+                                      puntos = resolverRuta(puntos,destinos.get(priori[l]),origencuadrante,siguiencuadrante);                  
+                                      for(int m=0;m<puntos.size();m++)  total.add(puntos.get(m));
+                              }
+                    }
+              return total;
+      }
+/*OBTENER CUADRANTE ESPECIFICO*/    
+      public int[] getPriori(int cuadranteorigen,int origen, int destino){
+          if((cuadranteorigen==1 && destino==0)||(cuadranteorigen==2 && destino==3)|| (destino<0)||(destino>3))return izquierda[origen];
+          if((cuadranteorigen==0 && destino==1)||(cuadranteorigen==3 && destino==2))return derecha[origen];
+          if((cuadranteorigen==2 && destino==1)||(cuadranteorigen==3 && destino==0))return arriba[origen];
+          if((cuadranteorigen==0 && destino==3)||(cuadranteorigen==1 && destino==2))return abajo[origen];
+          return new int[0];
+      }
+\end{lstlisting} 

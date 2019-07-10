@@ -1,0 +1,23 @@
+ \documentclass[12pt,spanish]{article}
+    \include{_MiEstilo2}
+    
+\begin{document}
+    \renewcommand{\headrule}{\hrule height 2pt \vspace{1mm}\hrule height 1pt}
+    \renewcommand{\footrulewidth}{1pt}
+    \renewcommand{\contentsname}{Índice}
+    \renewcommand{\listfigurename}{Lista de figuras}
+    \renewcommand{\listtablename}{Lista de tablas}
+    \renewcommand\lstlistingname{Código}
+    \renewcommand\lstlistlistingname {Lista de códigos}
+    \renewcommand{\figurename}{Figura}
+    \renewcommand{\tablename}{Tabla}
+    \renewcommand{\refname}{Referencias bibliográficas}
+    \numberwithin{figure}{section}
+    \numberwithin{lstlisting}{section}
+    \numberwithin{table}{section} 
+    \clearpage \newpage
+        \renewcommand{\thepage}{\arabic{page}}
+        \include{1_MarcoMetodologico}
+        
+\end{document}
+%    \thispagestyle{empty}
