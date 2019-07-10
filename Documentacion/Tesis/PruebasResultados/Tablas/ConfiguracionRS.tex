@@ -1,0 +1,19 @@
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[hbtp]
+\centering
+\caption{Configuración de las variables de recocido simulado durante las pruebas.}
+\begin{tabular}{llr}
+\hline
+\rowcolor[HTML]{656565} 
+\multicolumn{1}{c}{\cellcolor[HTML]{656565}{\color[HTML]{FFFFFF} \textbf{Nombre}}} & \multicolumn{1}{c}{\cellcolor[HTML]{656565}{\color[HTML]{FFFFFF} \textbf{Descripción}}}                                    & \multicolumn{1}{c}{\cellcolor[HTML]{656565}{\color[HTML]{FFFFFF} \textbf{Valor}}} \\ \hline
+Ciclos                                                                             & Cantidad de veces en que se repetirá el proceso                                                                            & 10000                                                                             \\ \hline
+Genes máximos                                                                      & \begin{tabular}[c]{@{}l@{}}La cantidad de genes que tendrá la especie durante \\ el proceso de búsqueda local\end{tabular} & 100                                                                               \\ \hline
+Distancia gen mínimo                                                               & \begin{tabular}[c]{@{}l@{}}El número mínimo que tendrá en el intercambio de \\ posiciones\end{tabular}                     & 2                                                                                 \\ \hline
+Distancia gen máximo                                                               & \begin{tabular}[c]{@{}l@{}}El número máximo que tendrá en el intercambio de \\ posiciones\end{tabular}                     & 5                                                                                 \\ \hline
+Temperatura inicial                                                                & Al momento de capturarse se multiplica por $10^{-10}$                                        								& 600                                                                               \\ \hline
+\end{tabular}
+
+\label{table:ConfiguracionRS.tsp}
+\end{table}

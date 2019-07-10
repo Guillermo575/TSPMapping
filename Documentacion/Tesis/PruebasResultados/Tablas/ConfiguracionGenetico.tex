@@ -1,0 +1,20 @@
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[hbtp]
+\centering
+\caption{Configuración de las variables de algoritmo genético durante las pruebas.}
+\begin{tabular}{
+>{\columncolor[HTML]{FFFFFF}}l lr}
+\hline
+\multicolumn{1}{c}{\cellcolor[HTML]{656565}{\color[HTML]{FFFFFF} \textbf{Nombre}}} & \multicolumn{1}{c}{\cellcolor[HTML]{656565}{\color[HTML]{FFFFFF} \textbf{Descripción}}}                                                                                                          & \cellcolor[HTML]{656565}{\color[HTML]{FFFFFF} \textbf{Valor}} \\ \hline
+Generaciones                                                                       & \begin{tabular}[c]{@{}l@{}}Cantidad de veces que se repetirá el proceso, en \\ este caso la cantidad de nuevas generaciones de hijos.\end{tabular}                                                & 1000                                                          \\ \hline
+{\color[HTML]{000000} Población}                                                   & \begin{tabular}[c]{@{}l@{}}Cantidad máxima que tendrá cada generación, en caso \\ de ser impar se eliminará el único que quede sin pareja \\ durante el proceso de cruza.\end{tabular}            & 100                                                           \\ \hline
+{\color[HTML]{000000} Genes máximos}                                               & \begin{tabular}[c]{@{}l@{}}La cantidad de genes que tendrá la especie durante \\ el proceso de búsqueda local.\end{tabular}                                                                       & 100                                                           \\ \hline
+{\color[HTML]{000000} Distancia gen mínimo}                                        & \begin{tabular}[c]{@{}l@{}}El número mínimo que tendrá el intercambio de \\ posiciones.\end{tabular}                                                                                           & 2                                                             \\ \hline
+{\color[HTML]{000000} Distancia gen máximo}                                        & \begin{tabular}[c]{@{}l@{}}El número máximo que tendrá el intercambio de \\ posiciones.\end{tabular}                                                                                           & 5                                                             \\ \hline
+\begin{tabular}[c]{@{}l@{}}Rango de mutación \\ mínimo\end{tabular}                & \begin{tabular}[c]{@{}l@{}}Porcentaje aleatorio mínimo de genes recesivos \\ que serán modificados durante la mutación,\\ esta cantidad se calcula junto con el valor de \\ genes máximos.\end{tabular} & 10                                                            \\ \hline
+\begin{tabular}[c]{@{}l@{}}Rango de mutación \\ máximo\end{tabular}                & \begin{tabular}[c]{@{}l@{}}Porcentaje aleatorio máximo de genes recesivos \\ que serán modificados durante la mutación,\\ esta cantidad se calcula junto con el valor de \\ genes mínimos.\end{tabular} & 40                                                            \\ \hline
+\end{tabular}
+\label{table:ConfiguracionAG.tsp}
+\end{table}

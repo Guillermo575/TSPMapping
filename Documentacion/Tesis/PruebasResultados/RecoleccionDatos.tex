@@ -1,0 +1,49 @@
+\subsection{Resumen de experimentos}
+Después de presentar los experimentos se recolectaron y vaciaron los resultados en las siguientes tablas cuyas descripciones se detallarán más adelante: 
+
+\begin{itemize}
+    \item Experimentos aplicando el método de cuadrantes (tabla \ref{table:ExperimentosConCuadrantes}).
+    \item Experimentos sin aplicar el método de cuadrantes (tabla \ref{table:ExperimentosSinCuadrantes}).
+    \item Análisis global de los mejores resultados (tabla \ref{table:ExperimentosComparativos}).
+\end{itemize}
+        
+\subsubsection{Experimentos aplicando el método de cuadrantes}  
+ La tabla \ref{table:ExperimentosConCuadrantes} muestra los resultados obtenidos de los experimentos aplicando el método de cuadrantes y aplicando una de las 3 metaheurísticas en cada uno de ellos. De las 100 corridas que se realizó sobre cada problema se tomó la mejor solución, la peor y se hizo un promedio de todos los resultados obtenidos.
+ 
+\input{PruebasResultados/Tablas/Global} 
+
+\subsubsection{Experimentos sin aplicar el método de cuadrantes}
+En la tabla \ref{table:ExperimentosSinCuadrantes} se usó las mismas columnas, esta vez muestra los datos de los experimentos sin haber aplicado el método de cuadrantes antes, como se puede notar las cantidades presentadas son mucho más altas que las anteriores. También de las 100 corridas que se realizó sobre cada problema se tomó la mejor solución, la peor y se hizo un promedio de todos los resultados.
+
+\input{PruebasResultados/Tablas/Global2} 
+
+\subsubsection{Análisis global de los mejores resultados}
+Por último en la tabla \ref{table:ExperimentosComparativos} se muestra la metaheurística del mejor resultado de las 3 (con cuadrantes y sin cuadrante) por cada problema expuesto, además de compararse con los mejores resultados (benchmark) obtenidos. Esta tabla está formada por 4 grupos que se explicará de izquierda a derecha:
+
+\begin{itemize}
+    \item \textbf{Con cuadrantes: }Aquí se muestra por cada problema de TSP, el mejor resultado obtenido de entre las 3 metaheurísticas empleadas en la tabla \ref{table:ExperimentosConCuadrantes}. Está dividido en las siguientes columnas:
+    \begin{itemize}
+        \item \textbf{Metaheurística: }El nombre de la metaheurística que produjo el mejor resultado.
+        \item \textbf{Resultado: }La puntuación obtenida a través de dicha metaheurística.
+    \end{itemize}
+    \item \textbf{Con cuadrantes: }Aquí se muestra por cada problema de TSP, el mejor resultado obtenido de entre las 3 metaheurísticas empleadas en la tabla \ref{table:ExperimentosSinCuadrantes}. Está dividido en las siguientes columnas.
+    \begin{itemize}
+        \item \textbf{Metaheurística: }El nombre de la metaheurística que trajo el mejor resultado.
+        \item \textbf{Resultado: }La puntuación obtenida a través de dicha metaheurística.
+    \end{itemize}
+    \item \textbf{Otros Datos: } Aquí se muestran información adicional:
+    \begin{itemize}
+        \item \textbf{Solo M.C: }Muestra el resultado que se obtuvo solo con el método de cuadrantes.
+        \item \textbf{Benchmark: }Muestra el resultado de los benchmarks.
+    \end{itemize}
+    \item \textbf{Comparaciones con los benchmarks: } Por último aquí se hace una comparación del resultado de los benchmark que se puede ver en la columna de Otros datos, con los resultados de las columnas anteriores. El valor de la columna es la diferencia de ambos valores mostrados en forma de porcentaje.
+    \begin{itemize}
+        \item \textbf{Con cuadrantes: }Muestra la diferencia con el mejor resultado aplicando el método de cuadrantes.
+        \item \textbf{Sin cuadrantes: }Muestra la diferencia con el mejor resultado sin aplicar el método de cuadrantes.
+        \item \textbf{Solo M.C: }Muestra la diferencia con el resultado que se obtuvo solo con el método de cuadrantes.
+    \end{itemize}
+\end{itemize}
+    
+\input{PruebasResultados/Tablas/Global3} 
+        
+\clearpage \newpage
